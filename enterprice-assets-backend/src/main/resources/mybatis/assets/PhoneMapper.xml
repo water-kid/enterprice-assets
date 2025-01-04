@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cj.project.assets.mapper.PhoneMapper">
+    
+    <resultMap type="Phone" id="PhoneResult">
+        <result property="id"    column="id"    />
+        <result property="department"    column="department"    />
+        <result property="consumer"    column="consumer"    />
+        <result property="phoneCode"    column="phone_code"    />
+        <result property="informationName"    column="information_name"    />
+        <result property="tel"    column="tel"    />
+        <result property="operator"    column="operator"    />
+        <result property="plan"    column="plan"    />
+        <result property="numberStatus"    column="number_status"    />
+        <result property="status"    column="status"    />
+        <result property="img"    column="img"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectPhoneVo">
+        select * from cc_phone
+    </sql>
+
+    <select id="selectPhoneList" parameterType="Phone" resultMap="PhoneResult">
+        <include refid="selectPhoneVo"/>
+        <where>  
+            <if test="consumer != null  and consumer != ''"> and consumer = #{consumer}</if>
+            <if test="phoneCode != null  and phoneCode != ''"> and phone_code = #{phoneCode}</if>
+            <if test="informationName != null  and informationName != ''"> and information_name like concat('%', #{informationName}, '%')</if>
+            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
+            <if test="numberStatus != null  and numberStatus != ''"> and number_status = #{numberStatus}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+    </select>
+    
+    <select id="selectPhoneById" parameterType="Long" resultMap="PhoneResult">
+        <include refid="selectPhoneVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPhone" parameterType="Phone" useGeneratedKeys="true" keyProperty="id">
+        insert into cc_phone
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="department != null">department,</if>
+            <if test="consumer != null">consumer,</if>
+            <if test="phoneCode != null">phone_code,</if>
+            <if test="informationName != null">information_name,</if>
+            <if test="tel != null">tel,</if>
+            <if test="operator != null">operator,</if>
+            <if test="plan != null">plan,</if>
+            <if test="numberStatus != null">number_status,</if>
+            <if test="status != null">status,</if>
+            <if test="img != null">img,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="department != null">#{department},</if>
+            <if test="consumer != null">#{consumer},</if>
+            <if test="phoneCode != null">#{phoneCode},</if>
+            <if test="informationName != null">#{informationName},</if>
+            <if test="tel != null">#{tel},</if>
+            <if test="operator != null">#{operator},</if>
+            <if test="plan != null">#{plan},</if>
+            <if test="numberStatus != null">#{numberStatus},</if>
+            <if test="status != null">#{status},</if>
+            <if test="img != null">#{img},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePhone" parameterType="Phone">
+        update cc_phone
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="department != null">department = #{department},</if>
+            <if test="consumer != null">consumer = #{consumer},</if>
+            <if test="phoneCode != null">phone_code = #{phoneCode},</if>
+            <if test="informationName != null">information_name = #{informationName},</if>
+            <if test="tel != null">tel = #{tel},</if>
+            <if test="operator != null">operator = #{operator},</if>
+            <if test="plan != null">plan = #{plan},</if>
+            <if test="numberStatus != null">number_status = #{numberStatus},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePhoneById" parameterType="Long">
+        delete from cc_phone where id = #{id}
+    </delete>
+
+    <delete id="deletePhoneByIds" parameterType="String">
+        delete from cc_phone where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

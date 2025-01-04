@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cj.project.assets.mapper.AssetsMapper">
+    
+    <resultMap type="Assets" id="AssetsResult">
+        <result property="id"    column="id"    />
+        <result property="purchaseDate"    column="purchase_date"    />
+        <result property="category"    column="category"    />
+        <result property="assetsCode"    column="assets_code"    />
+        <result property="assetUsage"    column="asset_usage"    />
+        <result property="name"    column="name"    />
+        <result property="brand"    column="brand"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="color"    column="color"    />
+        <result property="memory"    column="memory"    />
+        <result property="model"    column="model"    />
+        <result property="serialNumberMeid"    column="serial_number_meid"    />
+        <result property="price"    column="price"    />
+        <result property="purchaser"    column="purchaser"    />
+        <result property="consumer"    column="consumer"    />
+        <result property="consumerDepartment"    column="consumer_department"    />
+        <result property="store"    column="store"    />
+        <result property="img"    column="img"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+
+        <result property="totalCount" column="total_count" />
+        <result property="remainingCount" column="remaining_count" />
+        <result property="unitPrice" column="unit_price" />
+        <result property="totalPrice" column="total_price" />
+    </resultMap>
+
+    <sql id="selectAssetsVo">
+        select * from cc_assets
+    </sql>
+
+    <select id="selectAssetsList" parameterType="Assets" resultMap="AssetsResult">
+        <include refid="selectAssetsVo"/>
+        <where>  
+            <if test="category != null  and category != ''"> and category = #{category}</if>
+            <if test="assetsCode != null  and assetsCode != ''"> and assets_code = #{assetsCode}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="serialNumberMeid != null  and serialNumberMeid != ''"> and serial_number_meid = #{serialNumberMeid}</if>
+            <if test="purchaser != null  and purchaser != ''"> and purchaser = #{purchaser}</if>
+            <if test="consumer != null  and consumer != ''"> and consumer = #{consumer}</if>
+        </where>
+    </select>
+    
+    <select id="selectAssetsById" parameterType="Long" resultMap="AssetsResult">
+        <include refid="selectAssetsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAssets" parameterType="Assets" useGeneratedKeys="true" keyProperty="id">
+        insert into cc_assets
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="purchaseDate != null">purchase_date,</if>
+            <if test="category != null">category,</if>
+            <if test="assetsCode != null">assets_code,</if>
+            <if test="assetUsage != null">asset_usage,</if>
+            <if test="name != null">name,</if>
+            <if test="brand != null">brand,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="color != null">color,</if>
+            <if test="memory != null">memory,</if>
+            <if test="model != null">model,</if>
+            <if test="serialNumberMeid != null">serial_number_meid,</if>
+            <if test="price != null">price,</if>
+            <if test="purchaser != null">purchaser,</if>
+            <if test="consumer != null">consumer,</if>
+            <if test="consumerDepartment != null">consumer_department,</if>
+            <if test="store != null">store,</if>
+            <if test="img != null">img,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+            <if test="totalCount != null">total_count,</if>
+            <if test="remainingCount != null">remaining_count,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="totalPrice != null">total_price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="purchaseDate != null">#{purchaseDate},</if>
+            <if test="category != null">#{category},</if>
+            <if test="assetsCode != null">#{assetsCode},</if>
+            <if test="assetUsage != null">#{assetUsage},</if>
+            <if test="name != null">#{name},</if>
+            <if test="brand != null">#{brand},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="color != null">#{color},</if>
+            <if test="memory != null">#{memory},</if>
+            <if test="model != null">#{model},</if>
+            <if test="serialNumberMeid != null">#{serialNumberMeid},</if>
+            <if test="price != null">#{price},</if>
+            <if test="purchaser != null">#{purchaser},</if>
+            <if test="consumer != null">#{consumer},</if>
+            <if test="consumerDepartment != null">#{consumerDepartment},</if>
+            <if test="store != null">#{store},</if>
+            <if test="img != null">#{img},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="totalCount != null">#{totalCount},</if>
+            <if test="remainingCount != null">#{remainingCount},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="totalPrice != null">#{totalPrice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAssets" parameterType="Assets">
+        update cc_assets
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="purchaseDate != null">purchase_date = #{purchaseDate},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="assetsCode != null">assets_code = #{assetsCode},</if>
+            <if test="assetUsage != null">asset_usage = #{assetUsage},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="brand != null">brand = #{brand},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="memory != null">memory = #{memory},</if>
+            <if test="model != null">model = #{model},</if>
+            <if test="serialNumberMeid != null">serial_number_meid = #{serialNumberMeid},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="purchaser != null">purchaser = #{purchaser},</if>
+            <if test="consumer != null">consumer = #{consumer},</if>
+            <if test="consumerDepartment != null">consumer_department = #{consumerDepartment},</if>
+            <if test="store != null">store = #{store},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="totalCount != null">total_count = #{totalCount},</if>
+            <if test="remainingCount != null">remaining_count = #{remainingCount},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="totalPrice != null">total_price = #{totalPrice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAssetsById" parameterType="Long">
+        delete from cc_assets where id = #{id}
+    </delete>
+
+    <delete id="deleteAssetsByIds" parameterType="String">
+        delete from cc_assets where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

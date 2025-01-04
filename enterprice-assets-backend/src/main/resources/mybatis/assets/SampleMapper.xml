@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cj.project.assets.mapper.SampleMapper">
+    
+    <resultMap type="Sample" id="SampleResult">
+        <result property="id"    column="id"    />
+        <result property="purchaser"    column="purchaser"    />
+        <result property="amount"    column="amount"    />
+        <result property="specification"    column="specification"    />
+        <result property="store"    column="store"    />
+        <result property="purchaseTime"    column="purchase_time"    />
+        <result property="purchaseImg"    column="purchase_img"    />
+        <result property="purchaserTeam"    column="purchaser_team"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+        <result property="code" column="code"/>
+    </resultMap>
+
+    <sql id="selectSampleVo">
+        select * from cc_sample
+    </sql>
+
+    <select id="selectSampleList" parameterType="Sample" resultMap="SampleResult">
+        <include refid="selectSampleVo"/>
+        <where>  
+            <if test="purchaser != null  and purchaser != ''"> and purchaser = #{purchaser}</if>
+            <if test="specification != null  and specification != ''"> and specification like concat('%', #{specification}, '%')</if>
+            <if test="purchaseTime != null "> and purchase_time = #{purchaseTime}</if>
+            <if test="purchaseImg != null  and purchaseImg != ''"> and purchase_img = #{purchaseImg}</if>
+        </where>
+    </select>
+    
+    <select id="selectSampleById" parameterType="Long" resultMap="SampleResult">
+        <include refid="selectSampleVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSample" parameterType="Sample" useGeneratedKeys="true" keyProperty="id">
+        insert into cc_sample
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="purchaser != null">purchaser,</if>
+            <if test="amount != null">amount,</if>
+            <if test="specification != null">specification,</if>
+            <if test="store != null">store,</if>
+            <if test="purchaseTime != null">purchase_time,</if>
+            <if test="purchaseImg != null">purchase_img,</if>
+            <if test="purchaserTeam != null">purchaser_team,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+            <if test="code!= null">code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="purchaser != null">#{purchaser},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="specification != null">#{specification},</if>
+            <if test="store != null">#{store},</if>
+            <if test="purchaseTime != null">#{purchaseTime},</if>
+            <if test="purchaseImg != null">#{purchaseImg},</if>
+            <if test="purchaserTeam != null">#{purchaserTeam},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="code != null">#{code},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSample" parameterType="Sample">
+        update cc_sample
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="purchaser != null">purchaser = #{purchaser},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="specification != null">specification = #{specification},</if>
+            <if test="store != null">store = #{store},</if>
+            <if test="purchaseTime != null">purchase_time = #{purchaseTime},</if>
+            <if test="purchaseImg != null">purchase_img = #{purchaseImg},</if>
+            <if test="purchaserTeam != null">purchaser_team = #{purchaserTeam},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="code != null">code = #{code},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSampleById" parameterType="Long">
+        delete from cc_sample where id = #{id}
+    </delete>
+
+    <delete id="deleteSampleByIds" parameterType="String">
+        delete from cc_sample where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

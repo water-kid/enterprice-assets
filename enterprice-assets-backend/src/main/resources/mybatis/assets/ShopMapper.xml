@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cj.project.assets.mapper.ShopMapper">
+    
+    <resultMap type="Shop" id="ShopResult">
+        <result property="id"    column="id"    />
+        <result property="platform"    column="platform"    />
+        <result property="account"    column="account"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="ownerName"    column="owner_name"    />
+        <result property="officialAccountTel"    column="official_account_tel"    />
+        <result property="officialAccountOwner"    column="official_account_owner"    />
+        <result property="authorDeposit"    column="author_deposit"    />
+        <result property="businessLicenseImg"    column="business_license_img"    />
+        <result property="legalPerson"    column="legal_person"    />
+        <result property="deposit"    column="deposit"    />
+        <result property="operationStatus"    column="operation_status"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+        <result property="code" column="code"/>
+    </resultMap>
+
+    <sql id="selectShopVo">
+        select * from cc_shop
+    </sql>
+
+    <select id="selectShopList" parameterType="Shop" resultMap="ShopResult">
+        <include refid="selectShopVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="shopName != null  and shopName != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
+            <if test="ownerName != null  and ownerName != ''"> and owner_name like concat('%', #{ownerName}, '%')</if>
+            <if test="operationStatus != null  and operationStatus != ''"> and operation_status = #{operationStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopById" parameterType="Long" resultMap="ShopResult">
+        <include refid="selectShopVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertShop" parameterType="Shop" useGeneratedKeys="true" keyProperty="id">
+        insert into cc_shop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="platform != null">platform,</if>
+            <if test="account != null">account,</if>
+            <if test="shopName != null">shop_name,</if>
+            <if test="ownerName != null">owner_name,</if>
+            <if test="officialAccountTel != null">official_account_tel,</if>
+            <if test="officialAccountOwner != null">official_account_owner,</if>
+            <if test="authorDeposit != null">author_deposit,</if>
+            <if test="businessLicenseImg != null">business_license_img,</if>
+            <if test="legalPerson != null">legal_person,</if>
+            <if test="deposit != null">deposit,</if>
+            <if test="operationStatus != null">operation_status,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+            <if test="code != null">code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="platform != null">#{platform},</if>
+            <if test="account != null">#{account},</if>
+            <if test="shopName != null">#{shopName},</if>
+            <if test="ownerName != null">#{ownerName},</if>
+            <if test="officialAccountTel != null">#{officialAccountTel},</if>
+            <if test="officialAccountOwner != null">#{officialAccountOwner},</if>
+            <if test="authorDeposit != null">#{authorDeposit},</if>
+            <if test="businessLicenseImg != null">#{businessLicenseImg},</if>
+            <if test="legalPerson != null">#{legalPerson},</if>
+            <if test="deposit != null">#{deposit},</if>
+            <if test="operationStatus != null">#{operationStatus},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="code != null">#{code},</if>
+
+         </trim>
+    </insert>
+
+    <update id="updateShop" parameterType="Shop">
+        update cc_shop
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="platform != null">platform = #{platform},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="shopName != null">shop_name = #{shopName},</if>
+            <if test="ownerName != null">owner_name = #{ownerName},</if>
+            <if test="officialAccountTel != null">official_account_tel = #{officialAccountTel},</if>
+            <if test="officialAccountOwner != null">official_account_owner = #{officialAccountOwner},</if>
+            <if test="authorDeposit != null">author_deposit = #{authorDeposit},</if>
+            <if test="businessLicenseImg != null">business_license_img = #{businessLicenseImg},</if>
+            <if test="legalPerson != null">legal_person = #{legalPerson},</if>
+            <if test="deposit != null">deposit = #{deposit},</if>
+            <if test="operationStatus != null">operation_status = #{operationStatus},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="code != null">code = #{code},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteShopById" parameterType="Long">
+        delete from cc_shop where id = #{id}
+    </delete>
+
+    <delete id="deleteShopByIds" parameterType="String">
+        delete from cc_shop where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
